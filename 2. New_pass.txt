@@ -1,0 +1,15 @@
+1) 
+shell> mysql --user=root mysql
+mysql> GRANT ALL PRIVILEGES ON *.* TO monty@"%"
+    -> IDENTIFIED BY 'some_pass' WITH GRANT OPTION;
+mysql> GRANT RELOAD,PROCESS ON *.* TO admin@localhost;
+
+2) sudo /etc/init.d/mysql stop
+   sudo mysqld_safe --skip-grant-tables
+   mysql -u root
+3) update user set password=PASSWORD("NEW-ROOT-PASSWORD") whereUser='root';
+   flush privileges;
+   quit
+   /etc/init.d/mysql stop
+   /etc/init.d/mysql start
+   mysql -u root -p.

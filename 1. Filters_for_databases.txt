@@ -1,0 +1,499 @@
+Вариант 1
+postgres=# CREATE DATABASE MVD;
+CREATE DATABASE
+postgres=# \c mvd
+Вы подключены к базе данных "mvd" как пользователь "postgres".
+ create table sotrudniki(
+ kod_sotrudnika integer PRIMARY KEY,
+fio text,
+vozrast integer,
+pol text,
+adress text,
+telefon text,
+pasportnie_dannye text,
+kod_doljnosti integer,
+kod_zvania integer);
+CREATE TABLE
+CREATE TABLE doljnosti(
+kod_doljnosti integer PRIMARY KEY,
+naimenovanie_doljnosti text,
+oklad integer,
+obyazannosti text,
+trebovania text);
+CREATE TABLE
+CREATE TABLE zvania(
+kod_zvania integer PRIMARY KEY,
+naimenovanie text,
+nadbavka integer,
+obyazannosti text,
+trebovania text);
+CREATE TABLE
+CREATE TABLE vidy_prestupleniy(
+kod_vida_prestuplenia integer PRIMARY KEY,
+naimenovanie text,
+statia float,
+nakazanie text,
+srok_v_godah integer);
+CREATE TABLE
+CREATE TABLE prestupniki(
+nomer_dela integer PRIMARY KEY,
+fio text,
+data_rojdenia date,
+pol text,
+adress text,
+kod_vida_pestuplenia integer,
+kod_postradavshego integer,
+sostoyanie text,
+kod_sotrudnika integer);
+CREATE TABLE
+CREATE TABLE postradavshie(
+kod_postradavshego integer,
+fio text,
+data_rojdenia date,
+pol text,
+adress text);
+CREATE TABLE
+INSERT INTO doljnosti(kod_doljnosti, naimenovanie_doljnosti, oklad, obyazannosti, trebovania)
+VALUES(1112, 'zamestitel nachalnika urSPb', 80000, 'ved osobyh del ur, isp obyaz nacal urSPb v ego otsut', 'v ur obrazov, kur psihoan, vlad oruj, td'),
+(1113, 'st. sledovatel urSPb', 65000, 'vedenie osobyh i srochnih del', 'v ur obrazov, or 7 let, td'),
+(1114, 'sledovatel urSPb', 50000, 'vedenie srochnih i process del', 'v ur obrazov, or 5 let, td'),
+(1115, 'ml. sledovatel urSPb', 35000, 'vedenie process i dolgosroch del', 'v ur obrazov, or 3 let, td'),
+(1116, 'pomoschnik sledovatelya urSPb', 20000, 'obrabotka i pomosch v vedenii doldosroch del', '4+ kurs akadem mvd, td');
+INSERT 0 5
+INSERT INTO sotrudniki(kod_sotrudnika, fio, vozrast, pol, adress, telefon, pasportnie_dannie, kod_doljnosti, kod_zvania)
+VALUES(1234, 'Anisenco Aleksey Antonovich', 55, 'M', 'SPb, pr. Nevsky, 51-51', '89110000000', '40 10 000001', 1112, 1001),
+(1235, 'Brovesch Boris Bogdanovich', 21, 'M', 'SPb, pr. Stachek, 28-20', '89110000001', '40 18 000002', 1116, 1005),
+(1236, 'Vilkovich Viktoria Victorovna', 48, 'F', 'SPb, ul. Sadovaya, 100-50', '89110000002', '40 17 000003', 1112, 1001),
+(1237, 'Garikova Galina Gennadievna', 22, 'F', 'SPb, pr. Leninsky, 22-30', '89110000003', '40 18 000004', 1116, 1005),
+(1238, 'Daliko Daniil Dmitrievich', 35, 'M', 'SPb, pr. Geroev, 5-5', '89110000004', '40 05 000005', 1113, 1002),
+(1239, 'Evgrafov Egor Evgenievech', 25, 'M', 'SPb, ul. Tipanova, 98-1', '89110000005', '40 10 000006', 1115, 1004),
+(1240, 'Ignatieva Irina Igorevna', 32, 'F', 'SPb, ul. Narodnaya, 44-1', '89110000006', '40 08 000007', 1113, 1002),
+(1241, 'Krich Kristina Konstantinovna', 25, 'F', 'SPb, pr. Komendantsky, 2-45', '89110000007', '40 13 000008', 1115, 1004),
+(1242, 'Last Leonid Leontievich', 30, 'M', 'SPb, ul. Gastello, 15-15', '89110000008', '40 15 000009', 1114, 1003),
+(1243, 'Milanok Maria Mihailovna', 27, 'F', 'SPb, ul. Locmanskaya, 3-517', '8911000009', '40 15 000010', 1114, 1003);
+INSERT 0 6
+INSERT INTO zvania(kod_zvania, naimenovanie, nadbavka, obyazannosti, trebovania)
+VALUES (1001, 'Polkovnik', 40000, 'v sluch voen poloj komand polkom', 'srok slujby 20+ let'),
+(1002, 'Major', 30000, 'rukovod vveren otdelen', 'srok slujby 10+ let'),
+(1003, 'Kapitan', 25000, 'rukovod operupol gruppoy', 'srok slujby 7+ let'),
+(1004, 'St. lejtenant', 20000, 'rukovod svoim podrazdel', 'srok slujby 4+ goda'),
+(1005, 'Ml. lejtenant', 10000, 'ispolnen prikazov', '4 kursa akam mvd');
+INSERT 0 5
+INSERT INTO vidy_prestupleniy(kod_vida_prestuplenia, naimenovanie, statia, nakazanie, srok_v_godah)
+VALUES (2001, 'ubijstv 2-h i bol lic', 105.2, 'lish svobod (pojizn)', 20),
+(2002, 'iznasil', 131.3, 'lish svob', 15),
+(2003, 'torgov ludmi', 127.1, 'lish svobod', 6),
+(2004, 'neisp obyaz po vosp', 156, 'prin rab', 3),
+(2005, 'huliganstvo', 213, 'ispr rab', 2);
+INSERT 0 5
+INSERT INTO postradavshie (kod_postradavshego, fio, data_rojdenia, pol, adress)
+VALUES (9871, 'Nevka Natalia Nikolaevna', '1990-12-12', 'F', 'SPb, ul. Glinki, 40-78'),
+(9872, 'Ohvatov Oleg Olegovich', '2004-06-01', 'M', 'SPb, pr. Engelsa, 156-34'),
+(9873, 'Perechev Pyotr Pavlovich', '1995-08-20', 'M', 'SPb, ul. Ambarnaya, 204-2'),
+(9874, 'Richko Rada Romanovna', '1999-11-16', 'F', 'SPb, pr. Sredniy, 16-20'),
+(9875, 'Sito Sergey Stanislavovich', '1991-02-15', 'M', 'SPb, pr. Kuznecova, 78-87');
+INSERT 0 5
+INSERT INTO prestupniki(nomer_dela, fio, data_rojdenia, pol, adress, kod_vida_pestuplenia, kod_postradavshego, sostoyanie, kod_sotrudnika)
+VALUES (8761, 'Telepashko Timofey Tarasovich', '1980-09-09', 'M', 'SPb, pr. Tihoreckiy, 54-5', 2001, 0, 'smert', 1235),
+(8762, 'Uchako Una Utunovna', '1993-10-31', 'F', 'SPb, ul. Paradnaya, 7-90', 2001, 0, 'smert', 1234),
+(8763, 'Felicketov Fillip Fedorovich', '1979-05-09', 'M', 'SPb, pr. Dinamo, 4-4', 2002, 9871, 'tyajoloe', 1238),
+(8764, 'Halem Haya Hasanovna', '1989-07-23', 'F', 'SPb, ul. Hasanskaya, 22-79', 2002, 9873, 'narkot opyan', 1240),
+(8765, 'Tsesarka Tsih Tsihovich', '1960-03-27', 'M', 'SPb, pr. Udelniy, 84-100', 2003, 9874, 'psih nestab', 1242),
+(8766, 'Tsesarka(Chun) Cheslava Chokurovna', '1965-04-10', 'F', 'SPb, pr. Udelniy, 84-100', 2003, 9875, 'tyajoloe, shok', 1243),
+(8767, 'Eustov Ernest Ericovich', '1985-11-30', 'M', 'SPb, pr. Shaumyana, 200-201', 2004, 9872, 'istosch', 1239),
+(8768, 'Eustova(Ohvatova) Yulia Yurievna', '1990-12-31', 'F', 'SPb, pr. Shaumyana, 200-201', 2004, 9872, 'istosch', 1241),
+(8769, 'Yakovich Yana Yakovlevna', '2003-09-26', 'F', 'SPb, pr. Engelsa, 156-34', 2005, 0, '-', 1235),
+(8770, 'Ohvatov Oleg Olegovich', '2004-06-01', 'M', 'SPb, pr. Engelsa, 156-34', 2005, 0, '-', 1237);
+
+/*Запрос "Отдел кадров"*/
+SELECT s.kod_sotrudnika, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, d.naimenovanie_doljnosti, d.oklad, d.obyazannosti, d.trebovania,
+z.naimenovanie, z.nadbavka, z.obyazannosti, z.trebovania FROM sotrudniki AS s 
+LEFT JOIN doljnosti AS d ON s.kod_doljnosti=d.kod_doljnosti LEFT JOIN zvania AS z ON s.kod_zvania = z.kod_zvania;
+
+/*Запрос "Преступники"*/
+SELECT p.nomer_dela, p.fio, p.data_rojdenia, p.pol, p.adress, p.sostoyanie, v.naimenovanie, v.statia, v.nakazanie, v.srok_v_godah, po.fio, po.data_rojdenia, po.pol,
+po.adress, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, s.kod_doljnosti, s.kod_zvania
+FROM prestupniki as p
+LEFT JOIN vidy_prestupleniy as v on p.kod_vida_pestuplenia = v.kod_vida_prestuplenia
+LEFT JOIN postradavshie as po on p.kod_postradavshego = po.kod_postradavshego
+LEFT JOIN sotrudniki as s on p.kod_sotrudnika = s.kod_sotrudnika;
+/*Фильтры должностей*/
+SELECT s.kod_sotrudnika, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, d.naimenovanie_doljnosti, d.oklad, d.obyazannosti, d.trebovania,
+z.naimenovanie, z.nadbavka, z.obyazannosti, z.trebovania FROM sotrudniki AS s 
+LEFT JOIN doljnosti AS d ON s.kod_doljnosti=d.kod_doljnosti LEFT JOIN zvania AS z ON s.kod_zvania = z.kod_zvania
+WHERE d.naimenovanie_doljnosti = 'zamestitel nachalnika urSPb';
+
+SELECT s.kod_sotrudnika, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, d.naimenovanie_doljnosti, d.oklad, d.obyazannosti, d.trebovania,
+z.naimenovanie, z.nadbavka, z.obyazannosti, z.trebovania FROM sotrudniki AS s 
+LEFT JOIN doljnosti AS d ON s.kod_doljnosti=d.kod_doljnosti LEFT JOIN zvania AS z ON s.kod_zvania = z.kod_zvania
+WHERE d.naimenovanie_doljnosti = 'st. sledovatel urSPb';
+
+SELECT s.kod_sotrudnika, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, d.naimenovanie_doljnosti, d.oklad, d.obyazannosti, d.trebovania,
+z.naimenovanie, z.nadbavka, z.obyazannosti, z.trebovania FROM sotrudniki AS s 
+LEFT JOIN doljnosti AS d ON s.kod_doljnosti=d.kod_doljnosti LEFT JOIN zvania AS z ON s.kod_zvania = z.kod_zvania
+WHERE d.naimenovanie_doljnosti = 'sledovatel urSPb';
+
+SELECT s.kod_sotrudnika, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, d.naimenovanie_doljnosti, d.oklad, d.obyazannosti, d.trebovania,
+z.naimenovanie, z.nadbavka, z.obyazannosti, z.trebovania FROM sotrudniki AS s 
+LEFT JOIN doljnosti AS d ON s.kod_doljnosti=d.kod_doljnosti LEFT JOIN zvania AS z ON s.kod_zvania = z.kod_zvania
+WHERE d.naimenovanie_doljnosti = 'ml. sledovatel urSPb';
+
+SELECT s.kod_sotrudnika, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, d.naimenovanie_doljnosti, d.oklad, d.obyazannosti, d.trebovania,
+z.naimenovanie, z.nadbavka, z.obyazannosti, z.trebovania FROM sotrudniki AS s 
+LEFT JOIN doljnosti AS d ON s.kod_doljnosti=d.kod_doljnosti LEFT JOIN zvania AS z ON s.kod_zvania = z.kod_zvania
+WHERE d.naimenovanie_doljnosti = 'pomoschnik sledovatelya urSPb';
+
+/*Фильтры званий*/
+SELECT s.kod_sotrudnika, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, d.naimenovanie_doljnosti, d.oklad, d.obyazannosti, d.trebovania,
+z.naimenovanie, z.nadbavka, z.obyazannosti, z.trebovania FROM sotrudniki AS s 
+LEFT JOIN doljnosti AS d ON s.kod_doljnosti=d.kod_doljnosti LEFT JOIN zvania AS z ON s.kod_zvania = z.kod_zvania
+WHERE z.naimenovanie = 'Polkovnik';
+
+SELECT s.kod_sotrudnika, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, d.naimenovanie_doljnosti, d.oklad, d.obyazannosti, d.trebovania,
+z.naimenovanie, z.nadbavka, z.obyazannosti, z.trebovania FROM sotrudniki AS s 
+LEFT JOIN doljnosti AS d ON s.kod_doljnosti=d.kod_doljnosti LEFT JOIN zvania AS z ON s.kod_zvania = z.kod_zvania
+WHERE z.naimenovanie = 'Major';
+
+SELECT s.kod_sotrudnika, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, d.naimenovanie_doljnosti, d.oklad, d.obyazannosti, d.trebovania,
+z.naimenovanie, z.nadbavka, z.obyazannosti, z.trebovania FROM sotrudniki AS s 
+LEFT JOIN doljnosti AS d ON s.kod_doljnosti=d.kod_doljnosti LEFT JOIN zvania AS z ON s.kod_zvania = z.kod_zvania
+WHERE z.naimenovanie = 'St. lejtenant';
+
+SELECT s.kod_sotrudnika, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, d.naimenovanie_doljnosti, d.oklad, d.obyazannosti, d.trebovania,
+z.naimenovanie, z.nadbavka, z.obyazannosti, z.trebovania FROM sotrudniki AS s 
+LEFT JOIN doljnosti AS d ON s.kod_doljnosti=d.kod_doljnosti LEFT JOIN zvania AS z ON s.kod_zvania = z.kod_zvania
+WHERE z.naimenovanie = 'Ml. lejtenant';
+
+SELECT s.kod_sotrudnika, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, d.naimenovanie_doljnosti, d.oklad, d.obyazannosti, d.trebovania,
+z.naimenovanie, z.nadbavka, z.obyazannosti, z.trebovania FROM sotrudniki AS s 
+LEFT JOIN doljnosti AS d ON s.kod_doljnosti=d.kod_doljnosti LEFT JOIN zvania AS z ON s.kod_zvania = z.kod_zvania
+WHERE z.naimenovanie = 'Kapitan';
+
+SELECT s.kod_sotrudnika, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, d.naimenovanie_doljnosti, d.oklad, d.obyazannosti, d.trebovania,
+z.naimenovanie, z.nadbavka, z.obyazannosti, z.trebovania FROM sotrudniki AS s 
+LEFT JOIN doljnosti AS d ON s.kod_doljnosti=d.kod_doljnosti LEFT JOIN zvania AS z ON s.kod_zvania = z.kod_zvania
+WHERE z.naimenovanie = 'Kapitan';
+
+/*Фильтры по видам преступлений*/
+SELECT p.nomer_dela, p.fio, p.data_rojdenia, p.pol, p.adress, p.sostoyanie, v.naimenovanie, v.statia, v.nakazanie, v.srok_v_godah, po.fio, po.data_rojdenia, po.pol,
+po.adress, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, s.kod_doljnosti, s.kod_zvania
+FROM prestupniki as p
+LEFT JOIN vidy_prestupleniy as v on p.kod_vida_pestuplenia = v.kod_vida_prestuplenia
+LEFT JOIN postradavshie as po on p.kod_postradavshego = po.kod_postradavshego
+LEFT JOIN sotrudniki as s on p.kod_sotrudnika = s.kod_sotrudnika
+WHERE v.naimenovanie = 'iznasil';
+
+SELECT p.nomer_dela, p.fio, p.data_rojdenia, p.pol, p.adress, p.sostoyanie, v.naimenovanie, v.statia, v.nakazanie, v.srok_v_godah, po.fio, po.data_rojdenia, po.pol,
+po.adress, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, s.kod_doljnosti, s.kod_zvania
+FROM prestupniki as p
+LEFT JOIN vidy_prestupleniy as v on p.kod_vida_pestuplenia = v.kod_vida_prestuplenia
+LEFT JOIN postradavshie as po on p.kod_postradavshego = po.kod_postradavshego
+LEFT JOIN sotrudniki as s on p.kod_sotrudnika = s.kod_sotrudnika
+WHERE v.naimenovanie = 'neisp obyaz po vosp';
+
+SELECT p.nomer_dela, p.fio, p.data_rojdenia, p.pol, p.adress, p.sostoyanie, v.naimenovanie, v.statia, v.nakazanie, v.srok_v_godah, po.fio, po.data_rojdenia, po.pol,
+po.adress, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, s.kod_doljnosti, s.kod_zvania
+FROM prestupniki as p
+LEFT JOIN vidy_prestupleniy as v on p.kod_vida_pestuplenia = v.kod_vida_prestuplenia
+LEFT JOIN postradavshie as po on p.kod_postradavshego = po.kod_postradavshego
+LEFT JOIN sotrudniki as s on p.kod_sotrudnika = s.kod_sotrudnika
+WHERE v.naimenovanie = 'torgov ludmi';
+
+SELECT p.nomer_dela, p.fio, p.data_rojdenia, p.pol, p.adress, p.sostoyanie, v.naimenovanie, v.statia, v.nakazanie, v.srok_v_godah, po.fio, po.data_rojdenia, po.pol,
+po.adress, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, s.kod_doljnosti, s.kod_zvania
+FROM prestupniki as p
+LEFT JOIN vidy_prestupleniy as v on p.kod_vida_pestuplenia = v.kod_vida_prestuplenia
+LEFT JOIN postradavshie as po on p.kod_postradavshego = po.kod_postradavshego
+LEFT JOIN sotrudniki as s on p.kod_sotrudnika = s.kod_sotrudnika
+WHERE v.naimenovanie = 'huliganstvo';
+
+SELECT p.nomer_dela, p.fio, p.data_rojdenia, p.pol, p.adress, p.sostoyanie, v.naimenovanie, v.statia, v.nakazanie, v.srok_v_godah, po.fio, po.data_rojdenia, po.pol,
+po.adress, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, s.kod_doljnosti, s.kod_zvania
+FROM prestupniki as p
+LEFT JOIN vidy_prestupleniy as v on p.kod_vida_pestuplenia = v.kod_vida_prestuplenia
+LEFT JOIN postradavshie as po on p.kod_postradavshego = po.kod_postradavshego
+LEFT JOIN sotrudniki as s on p.kod_sotrudnika = s.kod_sotrudnika
+WHERE v.naimenovanie = 'ubijstv 2-h i bol lic';
+
+/*Фильтры по состоянию*/
+SELECT p.nomer_dela, p.fio, p.data_rojdenia, p.pol, p.adress, p.sostoyanie, v.naimenovanie, v.statia, v.nakazanie, v.srok_v_godah, po.fio, po.data_rojdenia, po.pol,
+po.adress, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, s.kod_doljnosti, s.kod_zvania
+FROM prestupniki as p
+LEFT JOIN vidy_prestupleniy as v on p.kod_vida_pestuplenia = v.kod_vida_prestuplenia
+LEFT JOIN postradavshie as po on p.kod_postradavshego = po.kod_postradavshego
+LEFT JOIN sotrudniki as s on p.kod_sotrudnika = s.kod_sotrudnika
+WHERE p.sostoyanie = 'tyajoloe';
+
+SELECT p.nomer_dela, p.fio, p.data_rojdenia, p.pol, p.adress, p.sostoyanie, v.naimenovanie, v.statia, v.nakazanie, v.srok_v_godah, po.fio, po.data_rojdenia, po.pol,
+po.adress, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, s.kod_doljnosti, s.kod_zvania
+FROM prestupniki as p
+LEFT JOIN vidy_prestupleniy as v on p.kod_vida_pestuplenia = v.kod_vida_prestuplenia
+LEFT JOIN postradavshie as po on p.kod_postradavshego = po.kod_postradavshego
+LEFT JOIN sotrudniki as s on p.kod_sotrudnika = s.kod_sotrudnika
+WHERE p.sostoyanie = 'istosch';
+
+SELECT p.nomer_dela, p.fio, p.data_rojdenia, p.pol, p.adress, p.sostoyanie, v.naimenovanie, v.statia, v.nakazanie, v.srok_v_godah, po.fio, po.data_rojdenia, po.pol,
+po.adress, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, s.kod_doljnosti, s.kod_zvania
+FROM prestupniki as p
+LEFT JOIN vidy_prestupleniy as v on p.kod_vida_pestuplenia = v.kod_vida_prestuplenia
+LEFT JOIN postradavshie as po on p.kod_postradavshego = po.kod_postradavshego
+LEFT JOIN sotrudniki as s on p.kod_sotrudnika = s.kod_sotrudnika
+WHERE p.sostoyanie = 'narkot opyan';
+
+SELECT p.nomer_dela, p.fio, p.data_rojdenia, p.pol, p.adress, p.sostoyanie, v.naimenovanie, v.statia, v.nakazanie, v.srok_v_godah, po.fio, po.data_rojdenia, po.pol,
+po.adress, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, s.kod_doljnosti, s.kod_zvania
+FROM prestupniki as p
+LEFT JOIN vidy_prestupleniy as v on p.kod_vida_pestuplenia = v.kod_vida_prestuplenia
+LEFT JOIN postradavshie as po on p.kod_postradavshego = po.kod_postradavshego
+LEFT JOIN sotrudniki as s on p.kod_sotrudnika = s.kod_sotrudnika
+WHERE p.sostoyanie = 'psih nestab';
+
+SELECT p.nomer_dela, p.fio, p.data_rojdenia, p.pol, p.adress, p.sostoyanie, v.naimenovanie, v.statia, v.nakazanie, v.srok_v_godah, po.fio, po.data_rojdenia, po.pol,
+po.adress, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, s.kod_doljnosti, s.kod_zvania
+FROM prestupniki as p
+LEFT JOIN vidy_prestupleniy as v on p.kod_vida_pestuplenia = v.kod_vida_prestuplenia
+LEFT JOIN postradavshie as po on p.kod_postradavshego = po.kod_postradavshego
+LEFT JOIN sotrudniki as s on p.kod_sotrudnika = s.kod_sotrudnika
+WHERE p.sostoyanie = 'tyajoloe, shok';
+
+SELECT p.nomer_dela, p.fio, p.data_rojdenia, p.pol, p.adress, p.sostoyanie, v.naimenovanie, v.statia, v.nakazanie, v.srok_v_godah, po.fio, po.data_rojdenia, po.pol,
+po.adress, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, s.kod_doljnosti, s.kod_zvania
+FROM prestupniki as p
+LEFT JOIN vidy_prestupleniy as v on p.kod_vida_pestuplenia = v.kod_vida_prestuplenia
+LEFT JOIN postradavshie as po on p.kod_postradavshego = po.kod_postradavshego
+LEFT JOIN sotrudniki as s on p.kod_sotrudnika = s.kod_sotrudnika
+WHERE p.sostoyanie = 'smert';
+
+SELECT p.nomer_dela, p.fio, p.data_rojdenia, p.pol, p.adress, p.sostoyanie, v.naimenovanie, v.statia, v.nakazanie, v.srok_v_godah, po.fio, po.data_rojdenia, po.pol,
+po.adress, s.fio, s.vozrast, s.pol, s.adress, s.telefon, s.pasportnie_dannie, s.kod_doljnosti, s.kod_zvania
+FROM prestupniki as p
+LEFT JOIN vidy_prestupleniy as v on p.kod_vida_pestuplenia = v.kod_vida_prestuplenia
+LEFT JOIN postradavshie as po on p.kod_postradavshego = po.kod_postradavshego
+LEFT JOIN sotrudniki as s on p.kod_sotrudnika = s.kod_sotrudnika
+WHERE p.sostoyanie = '-';
+
+Вариант 2
+postgres=# CREATE DATABASE airport;
+CREATE DATABASE
+postgres=# \c airport;
+Вы подключены к базе данных "airport" как пользователь "postgres".
+airport=#
+ create table sotrudniki(
+kod_sot integer,
+fio text,
+vozr integer,
+pol text,
+adress text,
+telefon text,
+pas_dan text,
+kod_dolj integer);
+CREATE TABLE
+CREATE TABLE doljnosti(
+kod_dolj integer,
+naim_dolj text,
+oklad integer,
+obyaz text,
+trebov text);
+CREATE TABLE
+CREATE TABLE samolety1(
+kod_sam integer,
+marka text,
+vmest integer,
+gruzp_t integer,
+kod_tip integer,
+teh_har text,
+dat_vyp date,
+nal_chas integer,
+data_pos_rem date,
+kod_sotrud integer);
+CREATE TABLE
+CREATE TABLE tipy_samoletov(
+kod_tip integer,
+naimen text,
+naznach text,
+ogranich text);
+CREATE TABLE
+CREATE TABLE ekipaji(
+kod_ekip integer,
+nal_chas integer,
+kod_s1 integer,
+kod_s2 integer,
+kod_s3 integer);
+CREATE TABLE
+CREATE TABLE reisy(
+kod_r integer,
+data date,
+vrem time,
+otk text,
+kuda text,
+kod_ekip integer,
+kod_sam integer,
+vrem_pol time);
+CREATE TABLE
+CREATE TABLE bilety(
+fio_pas text,
+pas_dan text,
+mesto text,
+kod_res integer,
+cena integer);
+CREATE TABLE
+INSERT INTO sotrudniki(kod_sot, fio, vozr, pol, adress, telefon, pas_dan, kod_dolj)
+VALUES(1234, 'Anisenco Aleksey Antonovich', 55, 'M', 'SPb, pr. Nevsky, 51-51', '89110000000', '40 10 000001', 1112),
+(1235, 'Brovesch Boris Bogdanovich', 21, 'M', 'SPb, pr. Stachek, 28-20', '89110000001', '40 18 000002', 1116),
+(1236, 'Vilkovich Viktoria Victorovna', 48, 'F', 'SPb, ul. Sadovaya, 100-50', '89110000002', '40 17 000003', 1113),
+(1237, 'Garikova Galina Gennadievna', 22, 'F', 'SPb, pr. Leninsky, 22-30', '89110000003', '40 18 000004', 1116),
+(1238, 'Daliko Daniil Dmitrievich', 35, 'M', 'SPb, pr. Geroev, 5-5', '89110000004', '40 05 000005', 1113),
+(1239, 'Evgrafov Egor Evgenievech', 25, 'M', 'SPb, ul. Tipanova, 98-1', '89110000005', '40 10 000006', 1116),
+(1240, 'Ignatieva Irina Igorevna', 32, 'F', 'SPb, ul. Narodnaya, 44-1', '89110000006', '40 08 000007', 1114),
+(1241, 'Krich Kristina Konstantinovna', 25, 'F', 'SPb, pr. Komendantsky, 2-45', '89110000007', '40 13 000008', 1115),
+(1242, 'Last Leonid Leontievich', 30, 'M', 'SPb, ul. Gastello, 15-15', '89110000008', '40 15 000009', 1114),
+(1243, 'Milanok Maria Mihailovna', 27, 'F', 'SPb, ul. Locmanskaya, 3-517', '8911000009', '40 15 000010', 1115);
+
+INSERT INTO doljnosti(kod_dolj, naim_dolj, oklad, obyaz, trebov)
+VALUES(1112, 'kom ekip', 470000, 'rukovod rab ekip, obesp bezopas', 'otl zdorov, v let obr, kolvo nalet chas 1000+'),
+(1113, 'vtor pilot', 350000, 'podb i izuch pol dokum, oznak s ogr po polet', 'otl zdorov, v let obr'),
+(1114, 'bortmechan', 100000, 'otlad, prov, podgot oborud', 'sred prof obr, deistv dopus na polet'),
+(1115, 'st. bortprov', 250000, 'poln rukov brig bortprov', 'nep vish, svid bortprov, staj 3+ goda'),
+(1116, 'bortprov', 80000, 'obecp komf i bezop passaj', 'sr spec, nep visch, proh dop obych');
+
+INSERT INTO samolety1(kod_sam, marka, vmest, gruzp_t, kod_tip, teh_har, dat_vyp, nal_chas, data_pos_rem, kod_sotrud)
+VALUES(7654, 'A320', 180, 77000, 6001, 'dal pol 6950 km', '2010-01-30', 9000, '2020-02-20', 1240),
+(7655, 'A330', 440, 242000, 6001, 'dal pol 8980 km', '2012-02-28', 8000,  '2020-03-01', 1242),
+(7656, 'Boeing-737-900ER', 192, 85200, 6002, 'dal pol 5925 km', '2013-03-05', 7000, '2020-03-05', 1240),
+(7657, 'Boeing-747-8', 680, 442000, 6002, 'dal pol 14 815 km', '2014-04-06', 6000, '2020-02-29', 1242),
+(7658, 'Tu-134', 96, 47000, 6003, 'dal pol 2800 km', '2015-05-07', 5000, '2020-02-18', 1240);
+
+INSERT INTO tipy_samoletov(kod_tip, naimen, naznach, ogranich)
+VALUES(6001, 'Airbus', 'perevoz passaj na razl dist', 'net ogr'),
+(6002, 'Boeing', 'perevoz passaj na razl dist', 'net ogr'),
+(6003, 'Tupolev', 'perevoz passaj na razl dist', 'net ogr');
+
+INSERT INTO ekipaji(kod_ekip, nal_chas, kod_s1, kod_s2, kod_s3)
+VALUES(2345, 3800, 1236, 1240, 1241),
+(2346, 4000, 1238, 1240, 1241),
+(2347, 500, 1236, 1242, 1241),
+(2348, 7000, 1238, 1242, 1243),
+(2349, 1500, 1236, 1240, 1243);
+
+INSERT INTO reisy(kod_r, data, vrem, otk, kuda, kod_ekip, kod_sam, vrem_pol)
+VALUES(3456, '2020-03-20', '21:00:00', 'SPb', 'Chelyabinsk', 2345, 7658, '04:40:00'),
+(3457, '2020-03-21', '12:30:00', 'SPb', 'Keiptaun', 2346, 7657, '12:50:00'),
+(3458, '2020-03-22', '20:45:00', 'SPb', 'Irkuts', 2347, 7656, '05:50:00'),
+(3459, '2020-03-23', '22:10:00', 'SPb', 'Tokio', 2348, 7655, '13:00:00'),
+(3460, '2020-03-24', '19:25:00', 'SPb', 'Yujno-sahalinsk', 2349, 7654, '9:00:00');
+
+INSERT INTO  bilety(fio_pas, pas_dan, mesto, kod_res, cena)
+VALUES('Opres Olga Olegovna', '40 19 234567', '14B', 3456, 3976),
+('Goga Nikolai Nikitovich', '40 17 345678', '17A', 3457, 60154),
+('Pupa Grigoriy Alekseevich', '40 13 456789', '12C', 3458, 11664),
+('Lupa Anton Igorevich', '40 12 567890', '31D', 3459, 35060),
+('Gubin Sergey Ericovich', '40 37 678901', '5F', 3460, 30020);
+
+/*Запрос отдел кадров*/
+SELECT s.kod_sot, s.fio, s.vozr, s.pol, s.adress, s.telefon, s.pas_dan, d.naim_dolj, d.oklad, d.obyaz, d.trebov
+FROM sotrudniki as s
+LEFT JOIN doljnosti as d on s.kod_dolj = d.kod_dolj;
+
+/*Запрос самолеты*/
+SELECT sa.kod_sam, sa.marka, sa.vmest, sa.gruzp_t, sa.teh_har, sa.dat_vyp, sa.nal_chas, sa.data_pos_rem,
+t.naimen, t.naznach, t.ogranich, 
+s.fio, s.vozr, s.pol, s.adress, s.telefon, s.pas_dan, s.kod_dolj
+FROM samolety1 as sa
+LEFT JOIN tipy_samoletov as t on sa.kod_tip = t.kod_tip
+left join sotrudniki as s on sa.kod_sotrud = s.kod_sot;
+
+/*Запрос Экипажи*/
+SELECT e.kod_ekip, e.nal_chas, 
+s.fio, s.vozr, s.pol, s.adress, s.telefon, s.pas_dan, s.kod_dolj
+FROM ekipaji as e
+LEFT JOIN sotrudniki as s on e.kod_s1=s.kod_sot 
+or s.kod_sot = e.kod_s2 
+or s.kod_sot = e.kod_s3;
+
+/*Запрос билеты*/
+SELECT b.fio_pas, b.pas_dan, b.mesto, b.cena, 
+r.data, r.vrem, r.otk, r.kuda, r.kod_ekip, r.kod_sam, r.vrem_pol
+FROM bilety as b
+LEFT JOIN reisy as r on b.kod_res = r.kod_r;
+
+/*Фильтры должностей*/
+SELECT s.kod_sot, s.fio, s.vozr, s.pol, s.adress, s.telefon, s.pas_dan, d.naim_dolj, d.oklad, d.obyaz, d.trebov
+FROM sotrudniki as s
+LEFT JOIN doljnosti as d on s.kod_dolj = d.kod_dolj
+WHERE d.naim_dolj = 'kom ekip';
+
+SELECT s.kod_sot, s.fio, s.vozr, s.pol, s.adress, s.telefon, s.pas_dan, d.naim_dolj, d.oklad, d.obyaz, d.trebov
+FROM sotrudniki as s
+LEFT JOIN doljnosti as d on s.kod_dolj = d.kod_dolj
+WHERE d.naim_dolj = 'vtor pilot';
+
+SELECT s.kod_sot, s.fio, s.vozr, s.pol, s.adress, s.telefon, s.pas_dan, d.naim_dolj, d.oklad, d.obyaz, d.trebov
+FROM sotrudniki as s
+LEFT JOIN doljnosti as d on s.kod_dolj = d.kod_dolj
+WHERE d.naim_dolj = 'bortmechan';
+
+SELECT s.kod_sot, s.fio, s.vozr, s.pol, s.adress, s.telefon, s.pas_dan, d.naim_dolj, d.oklad, d.obyaz, d.trebov
+FROM sotrudniki as s
+LEFT JOIN doljnosti as d on s.kod_dolj = d.kod_dolj
+WHERE d.naim_dolj = 'st. bortprov';
+
+SELECT s.kod_sot, s.fio, s.vozr, s.pol, s.adress, s.telefon, s.pas_dan, d.naim_dolj, d.oklad, d.obyaz, d.trebov
+FROM sotrudniki as s
+LEFT JOIN doljnosti as d on s.kod_dolj = d.kod_dolj
+WHERE d.naim_dolj = 'bortprov';
+
+/*Фильтр самолетов разных типов*/
+SELECT sa.kod_sam, sa.marka, sa.vmest, sa.gruzp_t, sa.teh_har, sa.dat_vyp, sa.nal_chas, sa.data_pos_rem,
+t.naimen, t.naznach, t.ogranich, 
+s.fio, s.vozr, s.pol, s.adress, s.telefon, s.pas_dan, s.kod_dolj
+FROM samolety1 as sa
+LEFT JOIN tipy_samoletov as t on sa.kod_tip = t.kod_tip
+left join sotrudniki as s on sa.kod_sotrud = s.kod_sot
+WHERE t.naimen = 'Airbus';
+
+SELECT sa.kod_sam, sa.marka, sa.vmest, sa.gruzp_t, sa.teh_har, sa.dat_vyp, sa.nal_chas, sa.data_pos_rem,
+t.naimen, t.naznach, t.ogranich, 
+s.fio, s.vozr, s.pol, s.adress, s.telefon, s.pas_dan, s.kod_dolj
+FROM samolety1 as sa
+LEFT JOIN tipy_samoletov as t on sa.kod_tip = t.kod_tip
+left join sotrudniki as s on sa.kod_sotrud = s.kod_sot
+WHERE t.naimen = 'Boeing';
+
+SELECT sa.kod_sam, sa.marka, sa.vmest, sa.gruzp_t, sa.teh_har, sa.dat_vyp, sa.nal_chas, sa.data_pos_rem,
+t.naimen, t.naznach, t.ogranich, 
+s.fio, s.vozr, s.pol, s.adress, s.telefon, s.pas_dan, s.kod_dolj
+FROM samolety1 as sa
+LEFT JOIN tipy_samoletov as t on sa.kod_tip = t.kod_tip
+left join sotrudniki as s on sa.kod_sotrud = s.kod_sot
+WHERE t.naimen = 'Tupolev';
+
+/*Фильтры билетов отдельных рейсов*/
+SELECT b.fio_pas, b.pas_dan, b.mesto, b.cena, 
+r.data, r.vrem, r.otk, r.kuda, r.kod_ekip, r.kod_sam, r.vrem_pol
+FROM bilety as b
+LEFT JOIN reisy as r on b.kod_res = r.kod_r
+WHERE r.kod_r = 3456;
+
+SELECT b.fio_pas, b.pas_dan, b.mesto, b.cena, 
+r.data, r.vrem, r.otk, r.kuda, r.kod_ekip, r.kod_sam, r.vrem_pol
+FROM bilety as b
+LEFT JOIN reisy as r on b.kod_res = r.kod_r
+WHERE r.kod_r = 3457;
+
+SELECT b.fio_pas, b.pas_dan, b.mesto, b.cena, 
+r.data, r.vrem, r.otk, r.kuda, r.kod_ekip, r.kod_sam, r.vrem_pol
+FROM bilety as b
+LEFT JOIN reisy as r on b.kod_res = r.kod_r
+WHERE r.kod_r = 3458;
+
+SELECT b.fio_pas, b.pas_dan, b.mesto, b.cena, 
+r.data, r.vrem, r.otk, r.kuda, r.kod_ekip, r.kod_sam, r.vrem_pol
+FROM bilety as b
+LEFT JOIN reisy as r on b.kod_res = r.kod_r
+WHERE r.kod_r = 3459;
+
+SELECT b.fio_pas, b.pas_dan, b.mesto, b.cena, 
+r.data, r.vrem, r.otk, r.kuda, r.kod_ekip, r.kod_sam, r.vrem_pol
+FROM bilety as b
+LEFT JOIN reisy as r on b.kod_res = r.kod_r
+WHERE r.kod_r = 3460;
